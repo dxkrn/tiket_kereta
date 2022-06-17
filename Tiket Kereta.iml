@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/Modules/poi-bin-5.2.2/auxiliary" />
+          <root url="file://$MODULE_DIR$/Modules/poi-bin-5.2.2/lib" />
+          <root url="file://$MODULE_DIR$/Modules/poi-bin-5.2.2/ooxml-lib" />
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-5.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-examples-5.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-excelant-5.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-ooxml-5.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-ooxml-full-5.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-ooxml-lite-5.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-scratchpad-5.2.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/Modules/poi-bin-5.2.2/poi-javadoc-5.2.2.jar!/" />
+        </JAVADOC>
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/Modules/poi-bin-5.2.2/auxiliary" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/Modules/poi-bin-5.2.2/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/Modules/poi-bin-5.2.2/ooxml-lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/Modules/log4j-core-2.17.2.0001L.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
