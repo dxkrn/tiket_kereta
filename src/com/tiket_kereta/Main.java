@@ -27,6 +27,7 @@ public class Main {
 
     //NOTE : Method Main
     public static void main(String[] args) {
+
         //menambahkan data dummy admin
         user.addUser("admin", "admin123");
 
