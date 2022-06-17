@@ -7,9 +7,9 @@ public class Vouchers {
     //inner class voucher
     static class Voucher {
         private String code;
-        private int discount;
+        private double discount;
 
-        Voucher(String kode, int potongan) {
+        Voucher(String kode, double potongan) {
             code = kode;
             discount = potongan;
         }
@@ -19,7 +19,7 @@ public class Vouchers {
     private ArrayList<Voucher> voucher = new ArrayList<>();
 
     //inputVoucher
-    public void inputVoucher(String kode, int potongan) {
+    public void inputVoucher(String kode, double potongan) {
         voucher.add(new Voucher(kode, potongan));
     }
 
@@ -38,8 +38,8 @@ public class Vouchers {
     }
 
     //method untuk mengembalikan daftar potongan
-    public ArrayList<Integer> getDiscount() {
-        ArrayList<Integer> discounts = new ArrayList<>();
+    public ArrayList<Double> getDiscount() {
+        ArrayList<Double> discounts = new ArrayList<>();
         for (Voucher i : voucher) {
             discounts.add(i.discount);
         }

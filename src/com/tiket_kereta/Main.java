@@ -151,7 +151,7 @@ public class Main {
 
             switch (pilihan) {
                 case '1' -> {
-                    System.out.println("Panggil method lihatJadwal");
+                    System.out.println("Panggil method printJadwal");
                     jadwal.printJadwal();
                     halamanUtama(activeUsername);
                 }
@@ -164,6 +164,8 @@ public class Main {
                 }
                 case '4' -> {
                     System.out.println("Panggil method cariVoucher");
+                    lihatVoucher();
+                    halamanUtama(activeUsername);
                 }
                 case '5' -> {
                     halamanAwal();
@@ -171,9 +173,33 @@ public class Main {
                 default -> System.out.println("\nAlert! Pilihan Menu tidak tersedia!\n");
             }
         } while (pilihan != '1' && pilihan != '2' && pilihan != '3' && pilihan != '4' && pilihan != '5');
+    }
+
+    //NOTE : halamanPesanTiket
+    public static void halamanPesanTiket() {
+
+    }
 
 
+    //NOTE : halamanPesananAnda
+    public static void halamanPesananAnda() {
 
+    }
+
+
+    //NOTE : lihatVoucher
+    public static void lihatVoucher() {
+        ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
+        ArrayList<Double> potonganTarif = new ArrayList<>(voucher.getDiscount());
+
+        System.out.println("-*-*-*- V O U C H E R -*-*-*-");
+        System.out.println("|       Kode       | Diskon |");
+        System.out.println("_____________________________");
+        for (int i = 0; i < kodeVoucher.size(); i++) {
+            System.out.printf("|%-18s|   %-2.0f%%  |", kodeVoucher.get(i), (potonganTarif.get(i)*100),"%");
+            System.out.println();
+        }
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
     }
 
 
@@ -311,7 +337,7 @@ public class Main {
         ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
 //        ArrayList<Integer> potonganTarif = new ArrayList<>(voucher.getDiscount());
         String kodeVC;
-        int potongan;
+        double potongan;
 
         System.out.println("\n\n\n");
         System.out.println("--* Input Voucher *--");
@@ -320,7 +346,7 @@ public class Main {
         System.out.print("Kode Voucher: ");
         kodeVC = input.nextLine();
         System.out.print("Potongan (%) : ");
-        potongan = (input.nextInt() / 100);
+        potongan = (input.nextDouble() / 100);
 
         if (kodeVoucher.isEmpty()) {
             voucher.inputVoucher(kodeVC, potongan);
