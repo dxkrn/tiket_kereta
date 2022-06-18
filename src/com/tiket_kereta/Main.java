@@ -20,6 +20,7 @@ public class Main {
     static User user = new User();
     static Jadwal jadwal = new Jadwal();
     static Vouchers voucher = new Vouchers();
+    static VoucherQueue voucherQueue = new VoucherQueue();
     static Scanner input = new Scanner(System.in);
     static char pilihan;
     static String inpUsername, inpPassword, inpCPassword, activeUsername;
@@ -190,8 +191,22 @@ public class Main {
 
     //NOTE : lihatVoucher
     public static void lihatVoucher() {
-        ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
-        ArrayList<Double> potonganTarif = new ArrayList<>(voucher.getDiscount());
+        //Dari Kelas Vouchers
+//        ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
+//        ArrayList<Double> potonganTarif = new ArrayList<>(voucher.getDiscount());
+//
+//        System.out.println("-*-*-*- V O U C H E R -*-*-*-");
+//        System.out.println("|       Kode       | Diskon |");
+//        System.out.println("_____________________________");
+//        for (int i = 0; i < kodeVoucher.size(); i++) {
+//            System.out.printf("|%-18s|   %-2.0f%%  |", kodeVoucher.get(i), (potonganTarif.get(i)*100),"%");
+//            System.out.println();
+//        }
+//        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+
+        //Dari kelas VoucherQueue
+        ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
+        ArrayList<Double> potonganTarif = new ArrayList<>(voucherQueue.getDiscount());
 
         System.out.println("-*-*-*- V O U C H E R -*-*-*-");
         System.out.println("|       Kode       | Diskon |");
@@ -201,6 +216,7 @@ public class Main {
             System.out.println();
         }
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+
     }
 
 
@@ -224,13 +240,16 @@ public class Main {
             System.out.println("-*-*-*-*-*-  Menu -*-*-*-*-*-");
             System.out.println("|  [1] Lihat Jadwal Bus     |");
             System.out.println("|  [2] Input Jadwal Bus     |");
-            System.out.println("|  [3] Input Voucher        |");
+            System.out.println("|  [3] Hapus Jadwal Bus     |");
             System.out.println("|  [4] Daftar Pesanan       |");
-            System.out.println("|  [5] Cetak Jadwal         |");
-            System.out.println("|  [6] Cetak Daftar Pesanan |");
-            System.out.println("|  [7] Keluar               |");
+            System.out.println("|  [5] Input Voucher        |");
+            System.out.println("|  [6] Hapus Voucher        |");
+            System.out.println("|  [7] Cetak Jadwal         |");
+            System.out.println("|  [8] Cetak Daftar Pesanan |");
+            System.out.println("|  [9] Cetak Daftar Voucher |");
+            System.out.println("|  [e] Keluar               |");
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n");
-            System.out.print("Pilihan [1/2/3/4/5/6] : ");
+            System.out.print("Pilihan [1/2/3/4/5/6/7/8/9/10] : ");
             pilihan = input.next().charAt(0);
             input.nextLine();
 
@@ -245,14 +264,23 @@ public class Main {
                     halamanInputJadwal();
                 }
                 case '3' -> {
-                    System.out.println("Panggil method inputVoucher");
-                    halamanInputVoucher();
+                    System.out.println("Panggil method hapusJadwal");
+                    //ntaran ya
                 }
                 case '4' -> {
                     System.out.println("Panggil method daftarPesanan");
 //                    halamanDaftarPesanan();
                 }
                 case '5' -> {
+                    System.out.println("Panggil method inputVoucher");
+                    halamanInputVoucher();
+                }
+                case '6' -> {
+                    System.out.println("Panggil method hapusVoucher");
+                    voucherQueue.removeVoucher();
+                    halamanDashboardAdmin(activeUsername);
+                }
+                case '7' -> {
                     System.out.println("Panggil method cetakJadwal");
                     try {
                         cetakJadwal();
@@ -260,11 +288,15 @@ public class Main {
                         e.printStackTrace();
                     }
                 }
-                case '6' -> {
+                case '8' -> {
                     System.out.println("Panggil method cetakDaftarPesanan");
 //                    cetakDaftarPesanan();
                 }
-                case '7' -> {
+                case '9' -> {
+                    System.out.println("Panggil method cetakDaftarVoucher");
+//                    cetakDaftarVoucher();
+                }
+                case 'e' -> {
                     halamanAwal();
                 }
                 default -> System.out.println("\nAlert! Pilihan Menu tidak tersedia!\n");
@@ -335,8 +367,6 @@ public class Main {
 
     //NOTE : halamanInputVoucher
     public static void halamanInputVoucher() {
-        ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
-//        ArrayList<Integer> potonganTarif = new ArrayList<>(voucher.getDiscount());
         String kodeVC;
         double potongan;
 
@@ -349,8 +379,31 @@ public class Main {
         System.out.print("Potongan (%) : ");
         potongan = (input.nextDouble() / 100);
 
+        //Dari kelas Vouchers
+//        ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
+////        ArrayList<Integer> potonganTarif = new ArrayList<>(voucher.getDiscount());
+//        if (kodeVoucher.isEmpty()) {
+//            voucher.inputVoucher(kodeVC, potongan);
+//            System.out.println("Alert! Input Kode Voucher berhasil!");
+//            halamanDashboardAdmin(activeUsername);
+//        } else {
+//            for (String i : kodeVoucher) {
+//                if (kodeVC.equals(i)) {
+//                    System.out.println("Alert! Kode Voucher telah diinputkan sebelumnya!");
+//                    halamanDashboardAdmin(activeUsername);
+//                } else {
+//                    voucher.inputVoucher(kodeVC, potongan);
+//                    System.out.println("Alert! Input Kode Voucher berhasil!");
+//                    halamanDashboardAdmin(activeUsername);
+//                }
+//            }
+//        }
+
+        //Dari kelas VoucherQueue
+        ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
+        ArrayList<Double> potonganTarif = new ArrayList<>(voucherQueue.getDiscount());
         if (kodeVoucher.isEmpty()) {
-            voucher.inputVoucher(kodeVC, potongan);
+            voucherQueue.inputVoucher(kodeVC, potongan);
             System.out.println("Alert! Input Kode Voucher berhasil!");
             halamanDashboardAdmin(activeUsername);
         } else {
@@ -359,12 +412,13 @@ public class Main {
                     System.out.println("Alert! Kode Voucher telah diinputkan sebelumnya!");
                     halamanDashboardAdmin(activeUsername);
                 } else {
-                    voucher.inputVoucher(kodeVC, potongan);
+                    voucherQueue.inputVoucher(kodeVC, potongan);
                     System.out.println("Alert! Input Kode Voucher berhasil!");
                     halamanDashboardAdmin(activeUsername);
                 }
             }
         }
+
     }
 
 
