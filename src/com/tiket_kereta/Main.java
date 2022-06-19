@@ -300,7 +300,8 @@ public class Main {
                 }
                 case '3' -> {
                     System.out.println("Panggil method hapusJadwal");
-                    //ntaran ya
+                    hapusJadwal();
+                    halamanDashboardAdmin(activeUsername);
                 }
                 case '4' -> {
                     System.out.println("Panggil method daftarPesanan");
@@ -353,6 +354,7 @@ public class Main {
         int inpKereta, inpAsal, inpTujuan;
         double autoTarif = 0;
         double persentaseTarif = 0;
+        int kursiTersedia = 0;
 
         System.out.println("\n\n\n");
         System.out.println("---- Daftar Kereta ----");
@@ -380,8 +382,8 @@ public class Main {
         System.out.println("| [9] Malang          |");
         System.out.println("-----------------------\n");
 
-        System.out.println("--* Input Jadwal *--");
         //input asal, tujuan, tanggal, waktu, tarif
+        System.out.println("--* Input Jadwal *--");
         System.out.print("Nama Kereta : [0 - 8] : ");
         inpKereta = input.nextInt();
         System.out.print("Kota Asal [0 - 9] : ");
@@ -440,6 +442,7 @@ public class Main {
             }
             autoID = autoID + "E";
             autoTarif = daftarKeretaEkonomi[inpKereta].cost * persentaseTarif;
+            kursiTersedia = daftarKeretaEkonomi[inpKereta].maxSeat;
         }
         if (inpKereta == 3 || inpKereta == 4 || inpKereta == 5) {
             namaKereta = daftarKeretaBisnis[inpKereta-3].name;
@@ -448,6 +451,7 @@ public class Main {
             }
             autoID = autoID  + "B";
             autoTarif = daftarKeretaBisnis[inpKereta-3].cost * persentaseTarif;
+            kursiTersedia = daftarKeretaBisnis[inpKereta-3].maxSeat;
         }
         if (inpKereta == 6 || inpKereta == 7 || inpKereta == 8) {
             namaKereta = daftarKeretaEksekutif[inpKereta-6].name;
@@ -456,6 +460,7 @@ public class Main {
             }
             autoID = autoID + "X";
             autoTarif = daftarKeretaEksekutif[inpKereta-6].cost * persentaseTarif;
+            kursiTersedia = daftarKeretaEksekutif[inpKereta-6].maxSeat;
         }
 
         for (int i = 0; i < 3; i++) {
@@ -474,7 +479,7 @@ public class Main {
 
         //inputJadwal
         if (!(jadwal.isContains(autoID))) {
-            jadwal.tambahJadwal(autoID, namaKereta, daftarStasiun[inpAsal], daftarStasiun[inpTujuan], inpTanggal, inpWaktu, autoTarif);
+            jadwal.tambahJadwal(autoID, namaKereta, daftarStasiun[inpAsal], daftarStasiun[inpTujuan], inpTanggal, inpWaktu, autoTarif, kursiTersedia);
 
             System.out.println("Alert! Input Jadwal " + autoID + " berhasil!");
 
@@ -483,6 +488,31 @@ public class Main {
             System.out.println("Alert! Jadwal sudah terdaftar sebelumnya!");
             halamanDashboardAdmin(activeUsername);
         }
+
+    }
+
+    //NOTE : hapusJadwal
+    public static void hapusJadwal() {
+        String idJadwal;
+        System.out.println("\n\n--* Input Jadwal *--");
+        System.out.print("ID Jadwal : ");
+        idJadwal = input.nextLine();
+
+        Set<String> scheduleKeys = jadwal.getJadwal();
+        ArrayList<String> idToHapus = new ArrayList<>();
+        for (String id : scheduleKeys) {
+            if (id.equals(idJadwal)) {
+                idToHapus.add(id);
+            }
+        }
+        if (idToHapus.isEmpty()) {
+            System.out.println("Alert! ID Jadwal tidak ditemukan!");
+        } else {
+            jadwal.removeJadwal(idToHapus.get(0));
+            System.out.println("Alert! Hapus Jadwal " + idToHapus.get(0) + " berhasil!");
+            idToHapus.clear();
+        }
+
 
     }
 

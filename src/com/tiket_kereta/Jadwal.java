@@ -7,9 +7,10 @@ public class Jadwal {
 
     private LinkedHashMap<String, Jadwal> schedules = new LinkedHashMap<>();
     private String train, src, dest, date, time;
+    private int seat;
     private double cost;
 
-    public void tambahJadwal(String id, String kereta , String asal, String tujuan,String tanggal, String waktu, double tarif) {
+    public void tambahJadwal(String id, String kereta , String asal, String tujuan,String tanggal, String waktu, double tarif, int kursi) {
         schedules.put(id, new Jadwal());
         schedules.get(id).train = kereta;
         schedules.get(id).src = asal;
@@ -17,6 +18,7 @@ public class Jadwal {
         schedules.get(id).date = tanggal;
         schedules.get(id).time = waktu;
         schedules.get(id).cost = tarif;
+        schedules.get(id).seat = kursi;
     }
 
     public Boolean isEmpty() {
@@ -34,13 +36,18 @@ public class Jadwal {
 
     Set<String> scheduleKeys = schedules.keySet();
     public void printJadwal() {
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* J A D W A L  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("|       Kereta       |      Asal      |     Tujuan     |    Tanggal    |     Waktu     |     Tarif     |");
-        System.out.println("________________________________________________________________________________________________________");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* J A D W A L  *-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("|     ID Jadwal      |       Kereta       |      Asal      |     Tujuan     |    Tanggal    |     Waktu     |     Tarif     | Kursi |");
+        System.out.println("_____________________________________________________________________________________________________________________________________");
         for (String id : scheduleKeys) {
-            System.out.printf("|%-20s|%-16s|%-16s|%-15s|%-15s|Rp%-13.2f|\n",getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getTarif(id));
+            System.out.printf("|%-20s|%-20s|%-16s|%-16s|%-15s|%-15s|Rp%-13.2f|  %-3d  |\n", id, getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getTarif(id), getKursi(id));
         }
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--**-*-*-*-*-*-*-*-*-");
+
+    }
+
+    public void removeJadwal(String id) {
+        schedules.remove(id);
     }
 
 
@@ -71,6 +78,9 @@ public class Jadwal {
 
     public double getTarif(String id) {
         return schedules.get(id).cost;
+    }
+    public int getKursi(String id) {
+        return schedules.get(id).seat;
     }
 
 
