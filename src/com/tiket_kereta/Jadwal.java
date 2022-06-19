@@ -7,9 +7,9 @@ public class Jadwal {
 
     private LinkedHashMap<String, Jadwal> schedules = new LinkedHashMap<>();
     private String train, src, dest, date, time;
-    private int cost;
+    private double cost;
 
-    public void tambahJadwal(String id, String kereta , String asal, String tujuan,String tanggal, String waktu, int tarif) {
+    public void tambahJadwal(String id, String kereta , String asal, String tujuan,String tanggal, String waktu, double tarif) {
         schedules.put(id, new Jadwal());
         schedules.get(id).train = kereta;
         schedules.get(id).src = asal;
@@ -34,13 +34,13 @@ public class Jadwal {
 
     Set<String> scheduleKeys = schedules.keySet();
     public void printJadwal() {
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* J A D W A L  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("|     Kereta     |      Asal      |     Tujuan     |    Tanggal    |     Waktu     |     Tarif     |");
-        System.out.println("____________________________________________________________________________________________________");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* J A D W A L  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("|       Kereta       |      Asal      |     Tujuan     |    Tanggal    |     Waktu     |     Tarif     |");
+        System.out.println("________________________________________________________________________________________________________");
         for (String id : scheduleKeys) {
-            System.out.printf("|%-16s|%-16s|%-16s|%-15s|%-15s|%-15s|\n",getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getTarif(id));
+            System.out.printf("|%-20s|%-16s|%-16s|%-15s|%-15s|Rp%-13.2f|\n",getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getTarif(id));
         }
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
     }
 
 
@@ -69,7 +69,7 @@ public class Jadwal {
         return schedules.get(id).time;
     }
 
-    public int getTarif(String id) {
+    public double getTarif(String id) {
         return schedules.get(id).cost;
     }
 

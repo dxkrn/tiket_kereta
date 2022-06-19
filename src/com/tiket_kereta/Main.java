@@ -1,7 +1,6 @@
 package com.tiket_kereta;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 //import poi : untuk export data ke excel
 import java.io.File;
@@ -12,18 +11,53 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class Main {
 
     static User user = new User();
     static Jadwal jadwal = new Jadwal();
-    static Vouchers voucher = new Vouchers();
     static VoucherQueue voucherQueue = new VoucherQueue();
+//    static int totalStasiun = 10;
+//    static Stasiun stasiun = new Stasiun(totalStasiun);
+//    static List<List<Node>> adjacent = new ArrayList<List<Node>>();
+
     static Scanner input = new Scanner(System.in);
     static char pilihan;
     static String inpUsername, inpPassword, inpCPassword, activeUsername;
+
+    //daftar stasiun
+    static String[] daftarStasiun = {
+            "Soekarno-Hatta",
+            "Gambir",
+            "Cimahi",
+            "Bandung",
+            "Tegal",
+            "Semarang Tawang",
+            "Yogyakarta",
+            "Solo Balapan",
+            "Surabaya Kota",
+            "Malang",
+    };
+
+    //daftar kereta
+    static KeretaEkonomi[] daftarKeretaEkonomi = {
+            new KeretaEkonomi("Malabaraja Ekonomi", 0),
+            new KeretaEkonomi("Ranggajati Ekonomi", 1000),
+            new KeretaEkonomi("Purwosari Ekonomi", 2000)
+    };
+    static KeretaBisnis[] daftarKeretaBisnis = {
+            new KeretaBisnis("Malabaraja Bisnis", 0),
+            new KeretaBisnis("Ranggajati Bisnis", 2000),
+            new KeretaBisnis("Purwosari Bisnis", 4000)
+    };
+    static KeretaEksekutif[] daftarKeretaEksekutif = {
+            new KeretaEksekutif("Malabaraja Eksekutif", 0),
+            new KeretaEksekutif("Ranggajati Eksekutif", 5000),
+            new KeretaEksekutif("Purwosari Eksekutif", 8000)
+    };
+
+
+
 
 
     //NOTE : Method Main
@@ -32,6 +66,7 @@ public class Main {
         //menambahkan data dummy admin
         user.addUser("admin", "admin123");
 
+        //Memanggil method halamanAwal
         halamanAwal();
     }
 
@@ -312,36 +347,122 @@ public class Main {
 
     //NOTE : halamanInputJadwal
     public static void halamanInputJadwal() {
-        String inpKereta, inpAsal, inpTujuan, inpTanggal, inpWaktu;
+        String namaKereta = "";
+        String inpTanggal, inpWaktu;
         String autoID = "";
-        int inpTarif;
+        int inpKereta, inpAsal, inpTujuan;
+        double autoTarif = 0;
+        double persentaseTarif = 0;
 
         System.out.println("\n\n\n");
-        System.out.println("--* Input Jadwal *--");
+        System.out.println("---- Daftar Kereta ----");
+        System.out.println("| [0] Malabaraja Ekonomi   |");
+        System.out.println("| [1] Ranggajati Ekonomi   |");
+        System.out.println("| [2] Purwosari Ekonomi    |");
+        System.out.println("| [3] Malabaraja Bisnis    |");
+        System.out.println("| [4] Ranggajati Bisnis    |");
+        System.out.println("| [5] Purwosari Bisnis     |");
+        System.out.println("| [6] Malabaraja Eksekutif |");
+        System.out.println("| [7] Ranggajati Eksekutif |");
+        System.out.println("| [8] Purwosari Eksekutif  |");
+        System.out.println("-----------------------\n");
 
+        System.out.println("---- Daftar Stasiun ---");
+        System.out.println("| [0] Soekarno-Hatta  |");
+        System.out.println("| [1] Gambir          |");
+        System.out.println("| [2] Cimahi          |");
+        System.out.println("| [3] Bandung         |");
+        System.out.println("| [4] Tegal           |");
+        System.out.println("| [5] Semarang Tawang |");
+        System.out.println("| [6] Yogyakarta      |");
+        System.out.println("| [7] Solo Balapan    |");
+        System.out.println("| [8] Surabaya Kota   |");
+        System.out.println("| [9] Malang          |");
+        System.out.println("-----------------------\n");
+
+        System.out.println("--* Input Jadwal *--");
         //input asal, tujuan, tanggal, waktu, tarif
-        System.out.print("Nama Kereta : ");
-        inpKereta = input.nextLine();
-        System.out.print("Kota Asal : ");
-        inpAsal = input.nextLine();
-        System.out.print("Kota Tujuan : ");
-        inpTujuan = input.nextLine();
+        System.out.print("Nama Kereta : [0 - 8] : ");
+        inpKereta = input.nextInt();
+        System.out.print("Kota Asal [0 - 9] : ");
+        inpAsal = input.nextInt();
+        input.nextLine();
+        System.out.print("Kota Tujuan [0 - 9] : ");
+        inpTujuan = input.nextInt();
+        input.nextLine();
         System.out.print("Tanggal [ddmmyy] : ");
         inpTanggal = input.nextLine();
         System.out.print("Waktu [hh.mm] : ");
         inpWaktu = input.nextLine();
-        System.out.print("Tarif : ");
-        inpTarif = input.nextInt();
+
+        //menghitung persentase tarif berdasarkan jarak antar stasiun
+
+        int totalStasiun = 10;
+        Stasiun stasiun = new Stasiun(totalStasiun);
+        List<List<Node>> adjacent = new ArrayList<List<Node>>();
+        //menambahkan adj jalur
+        for (int i = 0; i < totalStasiun; i++) {
+            List<Node> itm = new ArrayList<Node>();
+            adjacent.add(itm);
+        }
+        adjacent.get(0).add(new Node(1, 20));
+        adjacent.get(1).add(new Node(0, 20));
+        adjacent.get(1).add(new Node(2, 50));
+        adjacent.get(2).add(new Node(1, 50));
+        adjacent.get(2).add(new Node(3, 20));
+        adjacent.get(3).add(new Node(2, 20));
+        adjacent.get(3).add(new Node(4, 60));
+        adjacent.get(3).add(new Node(6, 100));
+        adjacent.get(4).add(new Node(3, 60));
+        adjacent.get(4).add(new Node(5, 50));
+        adjacent.get(5).add(new Node(4, 50));
+        adjacent.get(5).add(new Node(7, 40));
+        adjacent.get(6).add(new Node(3, 100));
+        adjacent.get(6).add(new Node(7, 30));
+        adjacent.get(7).add(new Node(5, 40));
+        adjacent.get(7).add(new Node(6, 30));
+        adjacent.get(7).add(new Node(8, 90));
+        adjacent.get(7).add(new Node(9, 80));
+        adjacent.get(8).add(new Node(7, 90));
+        adjacent.get(8).add(new Node(9, 40));
+        adjacent.get(9).add(new Node(7, 80));
+        adjacent.get(9).add(new Node(8, 40));
+
+        stasiun.dijkstra(adjacent, inpAsal);
+        persentaseTarif = ((double) stasiun.getDistance(inpTujuan) / 100);
+
 
         //generate ID
+        if (inpKereta == 0 || inpKereta == 1 || inpKereta == 2) {
+            namaKereta = daftarKeretaEkonomi[inpKereta].name;
+            for (int i = 0; i < 1; i++) {
+                autoID = autoID + daftarKeretaEkonomi[inpKereta].name.charAt(i);
+            }
+            autoID = autoID + "E";
+            autoTarif = daftarKeretaEkonomi[inpKereta].cost * persentaseTarif;
+        }
+        if (inpKereta == 3 || inpKereta == 4 || inpKereta == 5) {
+            namaKereta = daftarKeretaBisnis[inpKereta-3].name;
+            for (int i = 0; i < 1; i++) {
+                autoID = autoID + daftarKeretaBisnis[inpKereta-3].name.charAt(i);
+            }
+            autoID = autoID  + "B";
+            autoTarif = daftarKeretaBisnis[inpKereta-3].cost * persentaseTarif;
+        }
+        if (inpKereta == 6 || inpKereta == 7 || inpKereta == 8) {
+            namaKereta = daftarKeretaEksekutif[inpKereta-6].name;
+            for (int i = 0; i < 1; i++) {
+                autoID = autoID + daftarKeretaEksekutif[inpKereta-6].name.charAt(i);
+            }
+            autoID = autoID + "X";
+            autoTarif = daftarKeretaEksekutif[inpKereta-6].cost * persentaseTarif;
+        }
+
         for (int i = 0; i < 3; i++) {
-            autoID = autoID + inpKereta.charAt(i);
+            autoID = autoID + daftarStasiun[inpAsal].charAt(i);
         }
         for (int i = 0; i < 3; i++) {
-            autoID = autoID + inpAsal.charAt(i);
-        }
-        for (int i = 0; i < 3; i++) {
-            autoID = autoID + inpTujuan.charAt(i);
+            autoID = autoID + daftarStasiun[inpTujuan].charAt(i);
         }
         for (int i = 0; i < 4; i++) {
             autoID = autoID + inpTanggal.charAt(i);
@@ -353,7 +474,7 @@ public class Main {
 
         //inputJadwal
         if (!(jadwal.isContains(autoID))) {
-            jadwal.tambahJadwal(autoID, inpKereta, inpAsal, inpTujuan, inpTanggal, inpWaktu, inpTarif);
+            jadwal.tambahJadwal(autoID, namaKereta, daftarStasiun[inpAsal], daftarStasiun[inpTujuan], inpTanggal, inpWaktu, autoTarif);
 
             System.out.println("Alert! Input Jadwal " + autoID + " berhasil!");
 

@@ -1,9 +1,9 @@
 package com.tiket_kereta;
 
 public class KeretaEksekutif extends Kereta {
-    String name;
-    int maxSeat = 40;
-    int cost = 70000;
+    public String name;
+    public int maxSeat = 40;
+    public int cost = 70000;
 
     KeretaEksekutif(String namaKereta, int biayaTambahan) {
         name = namaKereta;
