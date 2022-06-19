@@ -500,26 +500,6 @@ public class Main {
         System.out.print("Potongan (%) : ");
         potongan = (input.nextDouble() / 100);
 
-        //Dari kelas Vouchers
-//        ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
-////        ArrayList<Integer> potonganTarif = new ArrayList<>(voucher.getDiscount());
-//        if (kodeVoucher.isEmpty()) {
-//            voucher.inputVoucher(kodeVC, potongan);
-//            System.out.println("Alert! Input Kode Voucher berhasil!");
-//            halamanDashboardAdmin(activeUsername);
-//        } else {
-//            for (String i : kodeVoucher) {
-//                if (kodeVC.equals(i)) {
-//                    System.out.println("Alert! Kode Voucher telah diinputkan sebelumnya!");
-//                    halamanDashboardAdmin(activeUsername);
-//                } else {
-//                    voucher.inputVoucher(kodeVC, potongan);
-//                    System.out.println("Alert! Input Kode Voucher berhasil!");
-//                    halamanDashboardAdmin(activeUsername);
-//                }
-//            }
-//        }
-
         //Dari kelas VoucherQueue
         ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
         ArrayList<Double> potonganTarif = new ArrayList<>(voucherQueue.getDiscount());
