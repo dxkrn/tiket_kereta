@@ -7,10 +7,11 @@ package com.tiket_kereta;
 import java.util.*;
 
 // Main class DijkstraExample1
+@SuppressWarnings("FieldMayBeFinal")
 public class Stasiun {
 
     // Member variables of the class
-    private int distance[];
+    private int[] distance;
     private Set<Integer> settld;
     private PriorityQueue<Node> pQue;
 
@@ -23,8 +24,8 @@ public class Stasiun {
 
         this.totalNodes = totalNodes;
         distance = new int[totalNodes];
-        settld = new HashSet<Integer>();
-        pQue = new PriorityQueue<Node>(totalNodes, new Node());
+        settld = new HashSet<>();
+        pQue = new PriorityQueue<>(totalNodes, new Node());
     }
 
     public void dijkstra(List<List<Node>> adjacent, int s) {
@@ -66,6 +67,7 @@ public class Stasiun {
         }
     }
 
+    @SuppressWarnings("UnusedAssignment")
     private void eNeighbours(int ux) {
 
         int edgeDist = -1;
@@ -117,6 +119,7 @@ class Node implements Comparator<Node> {
         this.price = price;
     }
 
+    @SuppressWarnings("UseCompareMethod")
     @Override
     public int compare(Node n1, Node n2) {
 

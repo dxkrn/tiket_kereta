@@ -3,8 +3,10 @@ package com.tiket_kereta;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 public class Jadwal {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private LinkedHashMap<String, Jadwal> schedules = new LinkedHashMap<>();
     private String train, src, dest, date, time;
     private int seat;
@@ -52,6 +54,7 @@ public class Jadwal {
 
 
     //All about Getter
+    @SuppressWarnings("rawtypes")
     public Set getJadwal() {
         return scheduleKeys;
     }

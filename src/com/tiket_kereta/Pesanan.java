@@ -3,7 +3,9 @@ package com.tiket_kereta;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 public class Pesanan {
+    @SuppressWarnings("FieldMayBeFinal")
     private LinkedHashMap<String, Pesanan> pesanan = new LinkedHashMap<>();
     private String username, name, telp, train, src, dest, date, time;
     private int numSeat;
@@ -72,6 +74,7 @@ public class Pesanan {
 
 
     //All about Getter
+    @SuppressWarnings("rawtypes")
     public Set getPesanan() {
         return pesananKeys;
     }

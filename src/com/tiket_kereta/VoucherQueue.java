@@ -1,12 +1,12 @@
 package com.tiket_kereta;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class VoucherQueue {
     //inner class voucher
+    @SuppressWarnings("FieldMayBeFinal")
     static class Voucher {
         private String code;
         private double discount;
@@ -18,6 +18,7 @@ public class VoucherQueue {
     }
 
     //queue untuk menyimpan data voucher
+    @SuppressWarnings("FieldMayBeFinal")
     private Queue<Voucher> vouchers = new LinkedList<>();
 
     //inputVoucher
@@ -31,6 +32,7 @@ public class VoucherQueue {
     }
 
     //isEmpty
+    @SuppressWarnings("unused")
     public Boolean isEmpty() {
         return vouchers.isEmpty();
     }

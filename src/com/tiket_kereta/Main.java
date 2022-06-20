@@ -3,9 +3,6 @@ package com.tiket_kereta;
 import java.util.*;
 
 //import poi : untuk export data ke excel
-import java.io.File;
-
-import org.apache.logging.log4j.core.config.AwaitCompletionReliabilityStrategy;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -18,9 +15,6 @@ public class Main {
     static Jadwal jadwal = new Jadwal();
     static VoucherQueue voucherQueue = new VoucherQueue();
     static Pesanan pesanan = new Pesanan();
-//    static int totalStasiun = 10;
-//    static Stasiun stasiun = new Stasiun(totalStasiun);
-//    static List<List<Node>> adjacent = new ArrayList<List<Node>>();
 
     static Scanner input = new Scanner(System.in);
     static char pilihan;
@@ -86,14 +80,10 @@ public class Main {
             input.nextLine();
 
             switch (pilihan) {
-                case '1' -> {
-                    System.out.println("Panggil method halamanMasuk");
-                    halamanMasuk();
-                }
-                case '2' -> {
-                    System.out.println("Panggil method halamanDaftar");
-                    halamanDaftar();
-                }
+                case '1' -> //memanggil method halamanMasuk
+                        halamanMasuk();
+                case '2' -> //memanggil method halamanDaftar
+                        halamanDaftar();
                 case '3' -> {
                     System.out.println("\n*Alert : Terima kasih :)\n");
                     System.exit(0);
@@ -189,27 +179,21 @@ public class Main {
 
             switch (pilihan) {
                 case '1' -> {
-                    System.out.println("Panggil method printJadwal");
+                    //memanggil method printJadwal dari objek jadwal
                     jadwal.printJadwal();
                     halamanUtama(activeUsername);
                 }
 
-                case '2' -> {
-                    System.out.println("Panggil method pesanTiket");
-                    halamanPesanTiket();
-                }
-                case '3' -> {
-                    System.out.println("Panggil method pesananAnda");
-                    halamanPesananAnda();
-                }
+                case '2' -> //memanggil method pesanTiket
+                        halamanPesanTiket();
+                case '3' -> //memanggil method pesananAnda : tabel daftar pesanan User yg sedang aktif
+                        halamanPesananAnda();
                 case '4' -> {
-                    System.out.println("Panggil method cariVoucher");
+                    //memanggil method lihatVoucher : tabel daftar voucher
                     lihatVoucher();
                     halamanUtama(activeUsername);
                 }
-                case '5' -> {
-                    halamanAwal();
-                }
+                case '5' -> halamanAwal();
                 default -> System.out.println("\nAlert! Pilihan Menu tidak tersedia!\n");
             }
         } while (pilihan != '1' && pilihan != '2' && pilihan != '3' && pilihan != '4' && pilihan != '5');
@@ -237,7 +221,7 @@ public class Main {
             System.out.print("Jumlah Kursi : ");
             jmlKursi = input.nextInt();
             input.nextLine();
-            System.out.print("Kode Voucher : ");
+            System.out.print("Kode Voucher [Enter untuk Lewati] : ");
             kodeVoucher = input.nextLine();
 
             System.out.print("\nApakah pesanan sudah sesuai? [y/n] : ");
@@ -246,6 +230,7 @@ public class Main {
 
         } while (pilihan != 'y' && pilihan != 'Y');
 
+        //noinspection unchecked
         Set<String> scheduleKeys = jadwal.getJadwal();
         ArrayList<String> tempIDPesanan = new ArrayList<>();
 
@@ -293,6 +278,7 @@ public class Main {
 
     //NOTE : halamanPesananAnda
     public static void halamanPesananAnda() {
+        //memanggil method printPesananUser dari objek pesanan : tabel pesanan user
         pesanan.printPesananUser(activeUsername);
         halamanUtama(activeUsername);
     }
@@ -300,7 +286,6 @@ public class Main {
 
     //NOTE : lihatVoucher
     public static void lihatVoucher() {
-        //Dari kelas VoucherQueue
         ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
         ArrayList<Double> potonganTarif = new ArrayList<>(voucherQueue.getDiscount());
 
@@ -308,7 +293,7 @@ public class Main {
         System.out.println("|       Kode       | Diskon |");
         System.out.println("_____________________________");
         for (int i = 0; i < kodeVoucher.size(); i++) {
-            System.out.printf("|%-18s|   %-2.0f%%  |", kodeVoucher.get(i), (potonganTarif.get(i)*100),"%");
+            System.out.printf("|%-18s|   %-2.0f%%  |", kodeVoucher.get(i), (potonganTarif.get(i)*100));
             System.out.println();
         }
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
@@ -318,21 +303,14 @@ public class Main {
 
 
 
-
-
-
-
-
-
     //======== ADMIN IN YOUR AREA =========
-    //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
     //NOTE : halamanDashboardAdmin
     public static void halamanDashboardAdmin(String username) {
         do {
-            System.out.println("\n\n===========================");
+            System.out.println("\n\n=============================");
             System.out.println(" Halo, " + username);
-            System.out.println("---------------------------");
+            System.out.println("-----------------------------");
             System.out.println("-*-*-*-*-*-  Menu -*-*-*-*-*-");
             System.out.println("|  [1] Lihat Jadwal Kereta  |");
             System.out.println("|  [2] Input Jadwal Kereta  |");
@@ -345,66 +323,61 @@ public class Main {
             System.out.println("|  [9] Cetak Daftar Voucher |");
             System.out.println("|  [e] Keluar               |");
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n");
-            System.out.print("Pilihan [1/2/3/4/5/6/7/8/9/10] : ");
+            System.out.print("Pilihan [1/2/3/4/5/6/7/8/9/e] : ");
             pilihan = input.next().charAt(0);
             input.nextLine();
 
             switch (pilihan) {
-                case '1' -> {
-                    System.out.println("Panggil method lihatJadwal");
-                    halamanLihatJadwal();
-                }
+                case '1' -> //memanggil method lihatJadwal
+                        halamanLihatJadwal();
 
-                case '2' -> {
-                    System.out.println("Panggil method inputJadwal");
-                    halamanInputJadwal();
-                }
+                case '2' -> //memanggil method inputJadwal
+                        halamanInputJadwal();
                 case '3' -> {
-                    System.out.println("Panggil method hapusJadwal");
+                    //memanggil method hapusJadwal
                     hapusJadwal();
                     halamanDashboardAdmin(activeUsername);
                 }
                 case '4' -> {
-                    System.out.println("Panggil method daftarPesanan");
+                    //memanggil method printPesanan dari objek pesanan : tabel semua pesanan User
                     pesanan.printPesanan();
                     halamanDashboardAdmin(activeUsername);
                 }
-                case '5' -> {
-                    System.out.println("Panggil method inputVoucher");
-                    halamanInputVoucher();
-                }
+                case '5' -> //memanggil method inputVoucher
+                        halamanInputVoucher();
                 case '6' -> {
-                    System.out.println("Panggil method hapusVoucher");
+                    //memanggil method removeVoucher dari objek voucherQueue : FIFO, dengan Queue
                     voucherQueue.removeVoucher();
                     halamanDashboardAdmin(activeUsername);
                 }
                 case '7' -> {
-                    System.out.println("Panggil method cetakJadwal");
+                    //memanggil method cetak jadwal : cetak ke file Excel
                     try {
                         cetakJadwal();
+                        System.out.println("Alert! Cetak Jadwal berhasil!");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 case '8' -> {
-                    System.out.println("Panggil method cetakDaftarPesanan");
+                    //memanggil method cetak daftar pesanan : cetak ke file Excel
                     try {
                         cetakDaftarPesanan();
+                        System.out.println("Alert! Cetak Daftar Pesanan berhasil!");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 case '9' -> {
-                    System.out.println("Panggil method cetakDaftarVoucher");
+                    //memanggil method cetak voucher : cetak ke file Excel
                     try {
                         cetakVoucher();
+                        System.out.println("Alert! Cetak Voucher berhasil!");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                case 'e' -> {
-                    halamanAwal();
-                }
+                case 'e' -> halamanAwal();
                 default -> System.out.println("\nAlert! Pilihan Menu tidak tersedia!\n");
             }
         } while (pilihan != '1' && pilihan != '2' && pilihan != '3' && pilihan != '4' && pilihan != '5' && pilihan != '6');
@@ -412,17 +385,20 @@ public class Main {
 
     //NOTE : halamanLihatJadwal
     public static void halamanLihatJadwal() {
+        //memanggil method printJadwal dari objek jadwal : tabel jadwal
         jadwal.printJadwal();
         halamanDashboardAdmin(activeUsername);
     }
 
     //NOTE : halamanInputJadwal
+    @SuppressWarnings("StringConcatenationInLoop")
     public static void halamanInputJadwal() {
         String namaKereta = "";
         String inpTanggal, inpWaktu;
         String autoID = "";
         int inpKereta, inpAsal, inpTujuan;
         double autoTarif = 0;
+        //noinspection UnusedAssignment
         double persentaseTarif = 0;
         int kursiTersedia = 0;
 
@@ -454,7 +430,7 @@ public class Main {
 
         //input asal, tujuan, tanggal, waktu, tarif
         System.out.println("--* Input Jadwal *--");
-        System.out.print("Nama Kereta : [0 - 8] : ");
+        System.out.print("Nama Kereta [0 - 8] : ");
         inpKereta = input.nextInt();
         System.out.print("Kota Asal [0 - 9] : ");
         inpAsal = input.nextInt();
@@ -468,13 +444,12 @@ public class Main {
         inpWaktu = input.nextLine();
 
         //menghitung persentase tarif berdasarkan jarak antar stasiun
-
         int totalStasiun = 10;
         Stasiun stasiun = new Stasiun(totalStasiun);
-        List<List<Node>> adjacent = new ArrayList<List<Node>>();
-        //menambahkan adj jalur
+        List<List<Node>> adjacent = new ArrayList<>();
+        //menambahkan adj jalur : membuat graph dari Class Stasiun
         for (int i = 0; i < totalStasiun; i++) {
-            List<Node> itm = new ArrayList<Node>();
+            List<Node> itm = new ArrayList<>();
             adjacent.add(itm);
         }
         adjacent.get(0).add(new Node(1, 20));
@@ -500,11 +475,12 @@ public class Main {
         adjacent.get(9).add(new Node(7, 80));
         adjacent.get(9).add(new Node(8, 40));
 
+        //menentukan rute tercepat dari asal ke tujuan berdasarkan jarak terdekat
         stasiun.dijkstra(adjacent, inpAsal);
         persentaseTarif = ((double) stasiun.getDistance(inpTujuan) / 100);
 
 
-        //generate ID
+        //generate ID Pesanan
         if (inpKereta == 0 || inpKereta == 1 || inpKereta == 2) {
             namaKereta = daftarKeretaEkonomi[inpKereta].name;
             for (int i = 0; i < 1; i++) {
@@ -532,7 +508,6 @@ public class Main {
             autoTarif = daftarKeretaEksekutif[inpKereta-6].cost * persentaseTarif;
             kursiTersedia = daftarKeretaEksekutif[inpKereta-6].maxSeat;
         }
-
         for (int i = 0; i < 3; i++) {
             autoID = autoID + daftarStasiun[inpAsal].charAt(i);
         }
@@ -545,7 +520,6 @@ public class Main {
         for (int i = 0; i < 2; i++) {
             autoID = autoID + inpWaktu.charAt(i);
         }
-
 
         //inputJadwal
         if (!(jadwal.isContains(autoID))) {
@@ -563,11 +537,13 @@ public class Main {
 
     //NOTE : hapusJadwal
     public static void hapusJadwal() {
+        //menghapus jadwal berdasarkan ID Jadwal
         String idJadwal;
         System.out.println("\n\n--* Input Jadwal *--");
         System.out.print("ID Jadwal : ");
         idJadwal = input.nextLine();
 
+        //noinspection unchecked
         Set<String> scheduleKeys = jadwal.getJadwal();
         ArrayList<String> idToHapus = new ArrayList<>();
 
@@ -603,7 +579,6 @@ public class Main {
 
         //Dari kelas VoucherQueue
         ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
-        ArrayList<Double> potonganTarif = new ArrayList<>(voucherQueue.getDiscount());
         if (kodeVoucher.isEmpty()) {
             voucherQueue.inputVoucher(kodeVC, potongan);
             System.out.println("Alert! Input Kode Voucher berhasil!");
@@ -626,9 +601,7 @@ public class Main {
 
 
 
-
-
-    //membuat objek Workbook
+    //membuat objek Workbook : untuk export data ke Excel
     static XSSFWorkbook workbook = new XSSFWorkbook();
 
     //NOTE : cetakJadwal
@@ -642,6 +615,7 @@ public class Main {
 
 
         //mengambil data jadwal dan memasukkan ke sheet
+        //noinspection unchecked
         Set<String> scheduleKeys = jadwal.getJadwal();
 
         //membuat tabel header
@@ -702,6 +676,7 @@ public class Main {
 
 
         //mengambil data jadwal dan memasukkan ke sheet
+        //noinspection unchecked
         Set<String> pesananKeys = pesanan.getPesanan();
 
         //membuat tabel header

@@ -2,9 +2,11 @@ package com.tiket_kereta;
 
 import java.util.LinkedHashMap;
 
+@SuppressWarnings("unused")
 public class User {
 
-    private LinkedHashMap<String, String> users = new LinkedHashMap<String, String>();
+    @SuppressWarnings("FieldMayBeFinal")
+    private LinkedHashMap<String, String> users = new LinkedHashMap<>();
     private String username, password;
 
     public void addUser(String username, String password) {
