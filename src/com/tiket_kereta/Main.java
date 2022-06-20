@@ -17,6 +17,7 @@ public class Main {
     static User user = new User();
     static Jadwal jadwal = new Jadwal();
     static VoucherQueue voucherQueue = new VoucherQueue();
+    static Pesanan pesanan = new Pesanan();
 //    static int totalStasiun = 10;
 //    static Stasiun stasiun = new Stasiun(totalStasiun);
 //    static List<List<Node>> adjacent = new ArrayList<List<Node>>();
@@ -176,7 +177,7 @@ public class Main {
             System.out.println(" Mau kemana hari ini?");
             System.out.println("---------------------------");
             System.out.println("-*-*-*-*-  Menu -*-*-*-*-*-");
-            System.out.println("|  [1] Jadwal Bus         |");
+            System.out.println("|  [1] Jadwal Kereta      |");
             System.out.println("|  [2] Pesan Tiket        |");
             System.out.println("|  [3] Pesanan Anda       |");
             System.out.println("|  [4] Dapatkan Voucher   |");
@@ -195,9 +196,11 @@ public class Main {
 
                 case '2' -> {
                     System.out.println("Panggil method pesanTiket");
+                    halamanPesanTiket();
                 }
                 case '3' -> {
                     System.out.println("Panggil method pesananAnda");
+                    halamanPesananAnda();
                 }
                 case '4' -> {
                     System.out.println("Panggil method cariVoucher");
@@ -214,31 +217,89 @@ public class Main {
 
     //NOTE : halamanPesanTiket
     public static void halamanPesanTiket() {
+        String idJadwal, idPesanan, username, nama, telepon, kereta, asal, tujuan, tanggal, waktu, kodeVoucher;
+        double totalPesanan;
+        double potonganPesanan = 0;
+        int jmlKursi, sisaKursi;
+        ArrayList<String> listKodeVoucher = new ArrayList<>(voucherQueue.getCode());
+        ArrayList<Double> listPotonganTarif = new ArrayList<>(voucherQueue.getDiscount());
 
+        do {
+            System.out.println("\n\n");
+            jadwal.printJadwal();
+            System.out.println("--* Input Pesanan *--");
+            System.out.print("ID Jadwal : ");
+            idJadwal = input.nextLine();
+            System.out.print("Nama Anda : ");
+            nama = input.nextLine();
+            System.out.print("Telepon : ");
+            telepon = input.nextLine();
+            System.out.print("Jumlah Kursi : ");
+            jmlKursi = input.nextInt();
+            input.nextLine();
+            System.out.print("Kode Voucher : ");
+            kodeVoucher = input.nextLine();
+
+            System.out.print("\nApakah pesanan sudah sesuai? [y/n] : ");
+            pilihan = input.next().charAt(0);
+            input.nextLine();
+
+        } while (pilihan != 'y' && pilihan != 'Y');
+
+        Set<String> scheduleKeys = jadwal.getJadwal();
+        ArrayList<String> tempIDPesanan = new ArrayList<>();
+
+        //pengecekan idJadwal
+        for (String id : scheduleKeys) {
+            if (id.equals(idJadwal)) {
+                tempIDPesanan.add(id);
+            }
+        }
+
+        //pengecekan kode voucher
+        for (int i = 0; i < listKodeVoucher.size(); i++) {
+            if (listKodeVoucher.get(i).equals(kodeVoucher)) {
+                potonganPesanan = listPotonganTarif.get(i);
+            } else {
+                potonganPesanan = 0;
+            }
+        }
+
+        //input pesanan
+        if (tempIDPesanan.isEmpty()) {
+            System.out.println("Alert! ID Jadwal tidak ditemukan!");
+        } else {
+            idPesanan = tempIDPesanan.get(0) + activeUsername + jmlKursi;
+            username = activeUsername;
+            kereta = jadwal.getKereta(tempIDPesanan.get(0));
+            asal = jadwal.getAsal(tempIDPesanan.get(0));
+            tujuan = jadwal.getTujuan(tempIDPesanan.get(0));
+            tanggal = jadwal.getTanggal(tempIDPesanan.get(0));
+            waktu = jadwal.getWaktu(tempIDPesanan.get(0));
+            totalPesanan = (jadwal.getTarif(tempIDPesanan.get(0)) - (jadwal.getTarif(tempIDPesanan.get(0)) * potonganPesanan)) * jmlKursi;
+            pesanan.tambahPesanan(idPesanan, username, nama, telepon, kereta, asal, tujuan, tanggal, waktu, jmlKursi, totalPesanan);
+            System.out.println("\nAlert! Pesanan " + idPesanan + " berhasil dibuat!");
+
+            sisaKursi = jadwal.getKursi(tempIDPesanan.get(0)) - jmlKursi;
+            jadwal.setKursi(tempIDPesanan.get(0), sisaKursi);
+            tempIDPesanan.clear();
+        }
+
+        halamanUtama(activeUsername);
     }
+
+
 
 
     //NOTE : halamanPesananAnda
     public static void halamanPesananAnda() {
-
+        pesanan.printPesananUser(activeUsername);
+        halamanUtama(activeUsername);
     }
 
 
     //NOTE : lihatVoucher
     public static void lihatVoucher() {
-        //Dari Kelas Vouchers
-//        ArrayList<String> kodeVoucher = new ArrayList<>(voucher.getCode());
-//        ArrayList<Double> potonganTarif = new ArrayList<>(voucher.getDiscount());
-//
-//        System.out.println("-*-*-*- V O U C H E R -*-*-*-");
-//        System.out.println("|       Kode       | Diskon |");
-//        System.out.println("_____________________________");
-//        for (int i = 0; i < kodeVoucher.size(); i++) {
-//            System.out.printf("|%-18s|   %-2.0f%%  |", kodeVoucher.get(i), (potonganTarif.get(i)*100),"%");
-//            System.out.println();
-//        }
-//        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-
         //Dari kelas VoucherQueue
         ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
         ArrayList<Double> potonganTarif = new ArrayList<>(voucherQueue.getDiscount());
@@ -273,9 +334,9 @@ public class Main {
             System.out.println(" Halo, " + username);
             System.out.println("---------------------------");
             System.out.println("-*-*-*-*-*-  Menu -*-*-*-*-*-");
-            System.out.println("|  [1] Lihat Jadwal Bus     |");
-            System.out.println("|  [2] Input Jadwal Bus     |");
-            System.out.println("|  [3] Hapus Jadwal Bus     |");
+            System.out.println("|  [1] Lihat Jadwal Kereta  |");
+            System.out.println("|  [2] Input Jadwal Kereta  |");
+            System.out.println("|  [3] Hapus Jadwal Kereta  |");
             System.out.println("|  [4] Daftar Pesanan       |");
             System.out.println("|  [5] Input Voucher        |");
             System.out.println("|  [6] Hapus Voucher        |");
@@ -305,7 +366,8 @@ public class Main {
                 }
                 case '4' -> {
                     System.out.println("Panggil method daftarPesanan");
-//                    halamanDaftarPesanan();
+                    pesanan.printPesanan();
+                    halamanDashboardAdmin(activeUsername);
                 }
                 case '5' -> {
                     System.out.println("Panggil method inputVoucher");
@@ -326,11 +388,19 @@ public class Main {
                 }
                 case '8' -> {
                     System.out.println("Panggil method cetakDaftarPesanan");
-//                    cetakDaftarPesanan();
+                    try {
+                        cetakDaftarPesanan();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 case '9' -> {
                     System.out.println("Panggil method cetakDaftarVoucher");
-//                    cetakDaftarVoucher();
+                    try {
+                        cetakVoucher();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 case 'e' -> {
                     halamanAwal();
@@ -500,6 +570,7 @@ public class Main {
 
         Set<String> scheduleKeys = jadwal.getJadwal();
         ArrayList<String> idToHapus = new ArrayList<>();
+
         for (String id : scheduleKeys) {
             if (id.equals(idJadwal)) {
                 idToHapus.add(id);
@@ -553,16 +624,15 @@ public class Main {
     }
 
 
-    //NOTE : halaman daftarPesanan
-    public static void daftarPesanan() {
 
-    }
 
+
+
+    //membuat objek Workbook
+    static XSSFWorkbook workbook = new XSSFWorkbook();
 
     //NOTE : cetakJadwal
     public static void cetakJadwal() throws Exception {
-        //membuat objek Workbook
-        XSSFWorkbook workbook = new XSSFWorkbook();
 
         //membuat objek spreadsheet
         XSSFSheet spreadsheet = workbook.createSheet("Jadwal Kereta");
@@ -620,9 +690,117 @@ public class Main {
         out.close();
 
         halamanDashboardAdmin(activeUsername);
+    }
+
+    public static void cetakDaftarPesanan() throws Exception {
+
+        //membuat objek spreadsheet
+        XSSFSheet spreadsheet = workbook.createSheet("Pesanan");
+
+        //membuat objek baris
+        XSSFRow row;
 
 
+        //mengambil data jadwal dan memasukkan ke sheet
+        Set<String> pesananKeys = pesanan.getPesanan();
+
+        //membuat tabel header
+        int rowIndex = 0;
+        Cell cell;
+        row = spreadsheet.createRow(rowIndex++);
+        cell = row.createCell(0);
+        cell.setCellValue("ID Pesanan");
+        cell = row.createCell(1);
+        cell.setCellValue("Nama");
+        cell = row.createCell(2);
+        cell.setCellValue("Telepon");
+        cell = row.createCell(3);
+        cell.setCellValue("Kereta");
+        cell = row.createCell(4);
+        cell.setCellValue("Asal");
+        cell = row.createCell(5);
+        cell.setCellValue("Tujuan");
+        cell = row.createCell(6);
+        cell.setCellValue("Tanggal");
+        cell = row.createCell(7);
+        cell.setCellValue("Waktu");
+        cell = row.createCell(8);
+        cell.setCellValue("Jumlah Kursi");
+        cell = row.createCell(9);
+        cell.setCellValue("Total Pesanan");
+
+        //memasukkan data ke sheet
+        for (String id : pesananKeys) {
+            row = spreadsheet.createRow(rowIndex++);
+            cell = row.createCell(0);
+            cell.setCellValue(id);
+            cell = row.createCell(1);
+            cell.setCellValue(pesanan.getName(id));
+            cell = row.createCell(2);
+            cell.setCellValue(pesanan.getTelp(id));
+            cell = row.createCell(3);
+            cell.setCellValue(pesanan.getKereta(id));
+            cell = row.createCell(4);
+            cell.setCellValue(pesanan.getAsal(id));
+            cell = row.createCell(5);
+            cell.setCellValue(pesanan.getTujuan(id));
+            cell = row.createCell(6);
+            cell.setCellValue(pesanan.getTanggal(id));
+            cell = row.createCell(7);
+            cell.setCellValue(pesanan.getWaktu(id));
+            cell = row.createCell(8);
+            cell.setCellValue(pesanan.getNumSeat(id));
+            cell = row.createCell(9);
+            cell.setCellValue(pesanan.getTotalCost(id));
+        }
+
+        // writing the workbook into the file...
+        FileOutputStream out = new FileOutputStream("D:/JadwalKereta.xlsx");
+
+        workbook.write(out);
+        out.close();
+
+        halamanDashboardAdmin(activeUsername);
     }
 
 
+    //NOTE : cetakVoucher
+    public static void cetakVoucher() throws Exception {
+
+        //membuat objek spreadsheet
+        XSSFSheet spreadsheet = workbook.createSheet("Voucher");
+
+        //membuat objek baris
+        XSSFRow row;
+
+
+        ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
+        ArrayList<Double> potonganTarif = new ArrayList<>(voucherQueue.getDiscount());
+
+        //membuat tabel header
+        int rowIndex = 0;
+        Cell cell;
+        row = spreadsheet.createRow(rowIndex++);
+        cell = row.createCell(0);
+        cell.setCellValue("KODE VOUCHER");
+        cell = row.createCell(1);
+        cell.setCellValue("DISCOUNT");
+
+        //memasukkan data ke sheet
+        for (int i = 0; i < kodeVoucher.size(); i++) {
+            row = spreadsheet.createRow(rowIndex++);
+            cell = row.createCell(0);
+            cell.setCellValue(kodeVoucher.get(i));
+            cell = row.createCell(1);
+            cell.setCellValue(potonganTarif.get(i) * 100 + "%");
+        }
+
+        // writing the workbook into the file...
+        FileOutputStream out = new FileOutputStream("D:/JadwalKereta.xlsx");
+
+        workbook.write(out);
+        out.close();
+
+        halamanDashboardAdmin(activeUsername);
+    }
 }

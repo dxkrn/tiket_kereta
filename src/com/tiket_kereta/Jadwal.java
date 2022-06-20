@@ -79,6 +79,7 @@ public class Jadwal {
     public double getTarif(String id) {
         return schedules.get(id).cost;
     }
+
     public int getKursi(String id) {
         return schedules.get(id).seat;
     }
@@ -109,5 +110,9 @@ public class Jadwal {
 
     public void setTarif(String id, int tarif) {
         cost = tarif;
+    }
+
+    public void setKursi(String id, int sisaKursi) {
+        schedules.get(id).seat = sisaKursi;
     }
 }
