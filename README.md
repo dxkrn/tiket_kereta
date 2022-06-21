@@ -11,9 +11,8 @@
 Hv a nc dy! Thanks ) 
 
 
-*For Testing :
-Admin username  : admin
-Admin passwd    : admin123
-*
+***For Testing :***
+Admin username  : *admin*
+Admin passwd    : *admin123*
 
 **!You can also register usernames for other users**
