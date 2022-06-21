@@ -663,7 +663,7 @@ public class Main {
         }
 
         // writing the workbook into the file...
-        FileOutputStream out = new FileOutputStream("D:/JadwalKereta.xlsx");
+        FileOutputStream out = new FileOutputStream("D:/DataAplikasiKereta.xlsx");
 
         workbook.write(out);
         out.close();
@@ -735,7 +735,7 @@ public class Main {
         }
 
         // writing the workbook into the file...
-        FileOutputStream out = new FileOutputStream("D:/JadwalKereta.xlsx");
+        FileOutputStream out = new FileOutputStream("D:/DataAplikasiKereta.xlsx");
 
         workbook.write(out);
         out.close();
@@ -776,7 +776,7 @@ public class Main {
         }
 
         // writing the workbook into the file...
-        FileOutputStream out = new FileOutputStream("D:/JadwalKereta.xlsx");
+        FileOutputStream out = new FileOutputStream("D:/DataAplikasiKereta.xlsx");
 
         workbook.write(out);
         out.close();
