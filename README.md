@@ -4,7 +4,7 @@
 
 👁 Clone this repo to your Local Directory (git clone https://github.com/dxkrnn/tiket_kereta.git)<br>
 👁 Open Directory as Project on your IDE (like IntelliJ, VsCode, etc)<br>
-👁 Run main method on Main class<br>
+👁 Run main method on Main class (src/com/tiket_kereta/**Main.java**)<br>
 👁 Test the program<br>
 👁 Report the issues<br>
 
