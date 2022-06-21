@@ -608,12 +608,12 @@ public class Main {
 
     //membuat objek Workbook : untuk export data ke Excel
     static XSSFWorkbook workbook = new XSSFWorkbook();
+    static XSSFSheet jadwalSheet = workbook.createSheet("Jadwal Kereta");
+    static XSSFSheet pesananSheet = workbook.createSheet("Pesanan");
+    static XSSFSheet voucherSheet = workbook.createSheet("Voucher");
 
     //NOTE : cetakJadwal
     public static void cetakJadwal() throws Exception {
-
-        //membuat objek spreadsheet
-        XSSFSheet spreadsheet = workbook.createSheet("Jadwal Kereta");
 
         //membuat objek baris
         XSSFRow row;
@@ -626,7 +626,7 @@ public class Main {
         //membuat tabel header
         int rowIndex = 0;
         Cell cell;
-        row = spreadsheet.createRow(rowIndex++);
+        row = jadwalSheet.createRow(rowIndex++);
         cell = row.createCell(0);
         cell.setCellValue("ID");
         cell = row.createCell(1);
@@ -644,7 +644,7 @@ public class Main {
 
         //memasukkan data ke sheet
         for (String id : scheduleKeys) {
-            row = spreadsheet.createRow(rowIndex++);
+            row = jadwalSheet.createRow(rowIndex++);
             cell = row.createCell(0);
             cell.setCellValue(id);
             cell = row.createCell(1);
@@ -663,7 +663,7 @@ public class Main {
         }
 
         // writing the workbook into the file...
-        FileOutputStream out = new FileOutputStream("D:/DataAplikasiKereta.xlsx");
+        FileOutputStream out = new FileOutputStream("D:/3 Project/Tiket Kereta/tiket_kereta/src/com/tiket_kereta/DataTables/DataAplikasiKereta.xlsx");
 
         workbook.write(out);
         out.close();
@@ -672,9 +672,6 @@ public class Main {
     }
 
     public static void cetakDaftarPesanan() throws Exception {
-
-        //membuat objek spreadsheet
-        XSSFSheet spreadsheet = workbook.createSheet("Pesanan");
 
         //membuat objek baris
         XSSFRow row;
@@ -687,7 +684,7 @@ public class Main {
         //membuat tabel header
         int rowIndex = 0;
         Cell cell;
-        row = spreadsheet.createRow(rowIndex++);
+        row = pesananSheet.createRow(rowIndex++);
         cell = row.createCell(0);
         cell.setCellValue("ID Pesanan");
         cell = row.createCell(1);
@@ -711,7 +708,7 @@ public class Main {
 
         //memasukkan data ke sheet
         for (String id : pesananKeys) {
-            row = spreadsheet.createRow(rowIndex++);
+            row = pesananSheet.createRow(rowIndex++);
             cell = row.createCell(0);
             cell.setCellValue(id);
             cell = row.createCell(1);
@@ -735,7 +732,7 @@ public class Main {
         }
 
         // writing the workbook into the file...
-        FileOutputStream out = new FileOutputStream("D:/DataAplikasiKereta.xlsx");
+        FileOutputStream out = new FileOutputStream("D:/3 Project/Tiket Kereta/tiket_kereta/src/com/tiket_kereta/DataTables/DataAplikasiKereta.xlsx");
 
         workbook.write(out);
         out.close();
@@ -747,9 +744,6 @@ public class Main {
     //NOTE : cetakVoucher
     public static void cetakVoucher() throws Exception {
 
-        //membuat objek spreadsheet
-        XSSFSheet spreadsheet = workbook.createSheet("Voucher");
-
         //membuat objek baris
         XSSFRow row;
 
@@ -760,7 +754,7 @@ public class Main {
         //membuat tabel header
         int rowIndex = 0;
         Cell cell;
-        row = spreadsheet.createRow(rowIndex++);
+        row = voucherSheet.createRow(rowIndex++);
         cell = row.createCell(0);
         cell.setCellValue("KODE VOUCHER");
         cell = row.createCell(1);
@@ -768,7 +762,7 @@ public class Main {
 
         //memasukkan data ke sheet
         for (int i = 0; i < kodeVoucher.size(); i++) {
-            row = spreadsheet.createRow(rowIndex++);
+            row = voucherSheet.createRow(rowIndex++);
             cell = row.createCell(0);
             cell.setCellValue(kodeVoucher.get(i));
             cell = row.createCell(1);
@@ -776,7 +770,7 @@ public class Main {
         }
 
         // writing the workbook into the file...
-        FileOutputStream out = new FileOutputStream("D:/DataAplikasiKereta.xlsx");
+        FileOutputStream out = new FileOutputStream("D:/3 Project/Tiket Kereta/tiket_kereta/src/com/tiket_kereta/DataTables/DataAplikasiKereta.xlsx");
 
         workbook.write(out);
         out.close();
