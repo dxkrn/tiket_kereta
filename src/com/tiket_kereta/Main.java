@@ -53,8 +53,6 @@ public class Main {
 
 
 
-
-
     //NOTE : Method Main
     public static void main(String[] args) {
 
@@ -92,6 +90,7 @@ public class Main {
             }
         } while (pilihan != '1' && pilihan != '2' && pilihan != '3');
     }
+
 
     //NOTE : halamanDaftar
     public static void halamanDaftar() {
@@ -199,6 +198,7 @@ public class Main {
         } while (pilihan != '1' && pilihan != '2' && pilihan != '3' && pilihan != '4' && pilihan != '5');
     }
 
+
     //NOTE : halamanPesanTiket
     public static void halamanPesanTiket() {
         String idJadwal, idPesanan, username, nama, telepon, kereta, asal, tujuan, tanggal, waktu, kodeVoucher;
@@ -254,26 +254,31 @@ public class Main {
         if (tempIDPesanan.isEmpty()) {
             System.out.println("Alert! ID Jadwal tidak ditemukan!");
         } else {
-            idPesanan = tempIDPesanan.get(0) + activeUsername + jmlKursi;
-            username = activeUsername;
-            kereta = jadwal.getKereta(tempIDPesanan.get(0));
-            asal = jadwal.getAsal(tempIDPesanan.get(0));
-            tujuan = jadwal.getTujuan(tempIDPesanan.get(0));
-            tanggal = jadwal.getTanggal(tempIDPesanan.get(0));
-            waktu = jadwal.getWaktu(tempIDPesanan.get(0));
-            totalPesanan = (jadwal.getTarif(tempIDPesanan.get(0)) - (jadwal.getTarif(tempIDPesanan.get(0)) * potonganPesanan)) * jmlKursi;
-            pesanan.tambahPesanan(idPesanan, username, nama, telepon, kereta, asal, tujuan, tanggal, waktu, jmlKursi, totalPesanan);
-            System.out.println("\nAlert! Pesanan " + idPesanan + " berhasil dibuat!");
+            if (jmlKursi > jadwal.getKursi(tempIDPesanan.get(0))) {
+                System.out.println("Alert! Sisa kursi tidak mencukupi!");
+            } else if(jmlKursi == 0){
+                System.out.println("Alert! Jumlah kursi yang dipilih tidak sesuai!");
+            } else {
+                idPesanan = tempIDPesanan.get(0) + activeUsername + jmlKursi;
+                username = activeUsername;
+                kereta = jadwal.getKereta(tempIDPesanan.get(0));
+                asal = jadwal.getAsal(tempIDPesanan.get(0));
+                tujuan = jadwal.getTujuan(tempIDPesanan.get(0));
+                tanggal = jadwal.getTanggal(tempIDPesanan.get(0));
+                waktu = jadwal.getWaktu(tempIDPesanan.get(0));
+                totalPesanan = (jadwal.getTarif(tempIDPesanan.get(0)) - (jadwal.getTarif(tempIDPesanan.get(0)) * potonganPesanan)) * jmlKursi;
+                pesanan.tambahPesanan(idPesanan, username, nama, telepon, kereta, asal, tujuan, tanggal, waktu, jmlKursi, totalPesanan);
+                System.out.println("\nAlert! Pesanan " + idPesanan + " berhasil dibuat!");
 
-            sisaKursi = jadwal.getKursi(tempIDPesanan.get(0)) - jmlKursi;
-            jadwal.setKursi(tempIDPesanan.get(0), sisaKursi);
-            tempIDPesanan.clear();
+                sisaKursi = jadwal.getKursi(tempIDPesanan.get(0)) - jmlKursi;
+                jadwal.setKursi(tempIDPesanan.get(0), sisaKursi);
+                tempIDPesanan.clear();
+            }
+
         }
 
         halamanUtama(activeUsername);
     }
-
-
 
 
     //NOTE : halamanPesananAnda
