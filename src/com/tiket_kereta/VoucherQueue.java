@@ -11,6 +11,7 @@ public class VoucherQueue {
         private String code;
         private double discount;
 
+        //Constructor
         Voucher(String kode, double potongan) {
             code = kode;
             discount = potongan;
