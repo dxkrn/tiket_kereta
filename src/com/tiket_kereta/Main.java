@@ -323,7 +323,7 @@ public class Main {
             System.out.println("|  [4] Daftar Pesanan       |");
             System.out.println("|  [5] Lihat Voucher        |");
             System.out.println("|  [6] Input Voucher        |");
-            System.out.println("|  [7] Update Voucher        |");
+            System.out.println("|  [7] Update Voucher       |");
             System.out.println("|  [8] Hapus Voucher        |");
             System.out.println("|  [a] Cetak Jadwal         |");
             System.out.println("|  [b] Cetak Daftar Pesanan |");
