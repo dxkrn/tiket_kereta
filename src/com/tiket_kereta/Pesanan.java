@@ -43,28 +43,28 @@ public class Pesanan {
     //cetak daftar pesanan untuk Admin
     Set<String> pesananKeys = pesanan.keySet();
     public void printPesanan() {
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*- D A F T A R   P E S A N A N  -*-*-*--*-*-*-*-*--*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("|     ID Pesanan     |      Username      |        Nama        |      Telp.     |       Kereta       |      Asal      |     Tujuan     |    Tanggal    |     Waktu     | Jml Kursi | Total Pesanan |");
-        System.out.println("____________________________________________________________________________________________________________________________________________________________________________________________________");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*- D A F T A R   P E S A N A N  -*-*-*--*-*-*-*-*--*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("|         ID Pesanan           |      Username      |        Nama        |      Telp.     |       Kereta       |      Asal      |     Tujuan     |    Tanggal    |     Waktu     | Jml Kursi | Total Pesanan |");
+        System.out.println("______________________________________________________________________________________________________________________________________________________________________________________________________________");
         for (String id : pesananKeys) {
-            System.out.printf("|%-20s|%-20s|%-20s|%-16s|%-20s|%-16s|%-16s|%-15s|%-15s|    %-3d    |Rp%-15.2f|\n", id, getUsername(id), getName(id), getTelp(id), getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getNumSeat(id), getTotalCost(id));
+            System.out.printf("|%-30s|%-20s|%-20s|%-16s|%-20s|%-16s|%-16s|%-15s|%-15s|    %-3d    |Rp%-14.2f|\n", id, getUsername(id), getName(id), getTelp(id), getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getNumSeat(id), getTotalCost(id));
         }
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-");
 
     }
 
     //cetak daftar pesanan untuk User biasa
     public void printPesananUser(String username) {
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*- D A F T A R   P E S A N A N  -*-*-*--*-*-*-*-*--*-*-*--*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("|       ID Pesanan       |        Nama        |      Telp.     |       Kereta       |      Asal      |     Tujuan     |    Tanggal    |     Waktu     | Jml Kursi | Total Pesanan |");
-        System.out.println("___________________________________________________________________________________________________________________________________________________________________________________");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*- D A F T A R   P E S A N A N  -*-*-*--*-*-*-*-*--*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("|         ID Pesanan          |        Nama        |      Telp.     |       Kereta       |      Asal      |     Tujuan     |    Tanggal    |     Waktu     | Jml Kursi | Total Pesanan |");
+        System.out.println("________________________________________________________________________________________________________________________________________________________________________________________");
         for (String id : pesananKeys) {
             if (getUsername(id).equals(username)) {
-                System.out.printf("|%-24s|%-20s|%-16s|%-20s|%-16s|%-16s|%-15s|%-15s|    %-3d    |Rp%-15.2f|\n", id, getName(id), getTelp(id), getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getNumSeat(id), getTotalCost(id));
+                System.out.printf("|%-30s|%-20s|%-16s|%-20s|%-16s|%-16s|%-15s|%-15s|    %-3d    |Rp%-14.2f|\n", id, getName(id), getTelp(id), getKereta(id), getAsal(id), getTujuan(id), getTanggal(id), getWaktu(id), getNumSeat(id), getTotalCost(id));
             }
 
         }
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
     }
 
