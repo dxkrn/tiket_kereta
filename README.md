@@ -8,11 +8,10 @@
 👁 Test the program<br>
 👁 Report the issues<br>
 
-Hv a nc dy! Thanks ) 
-
-
 ***For Testing :*** <br>
 Admin username  : *admin* <br>
 Admin passwd    : *admin123* <br>
 
 **!You can also register usernames for other users**
+
+Hv a nc dy! Thanks🤗
