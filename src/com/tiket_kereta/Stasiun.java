@@ -1,25 +1,19 @@
 package com.tiket_kereta;
 
-// Java Program shows the implementation Dijkstra's Algorithm
-// Using the Priority Queue
-
-// import statement
 import java.util.*;
 
-// Main class DijkstraExample1
 @SuppressWarnings("FieldMayBeFinal")
 public class Stasiun {
 
-    // Member variables of the class
     private int[] distance;
     private Set<Integer> settld;
     private PriorityQueue<Node> pQue;
 
-    // Total count of the vertices
+    // Jumlah total vertices
     private int totalNodes;
     List<List<Node>> adjacent;
 
-    // Constructor of the class
+    //Constructor
     public Stasiun(int totalNodes) {
 
         this.totalNodes = totalNodes;
@@ -32,35 +26,31 @@ public class Stasiun {
         this.adjacent = adjacent;
 
         for (int j = 0; j < totalNodes; j++) {
-// initializing the distance of every node to infinity (a large number)
             distance[j] = Integer.MAX_VALUE;
         }
 
-// Adding the source node to pQue
+        //Menambahkan src node ke pQue
         pQue.add(new Node(s, 0));
 
-// distance of the source is always zero
+        //jarak src = 0
         distance[s] = 0;
 
         while (settld.size() != totalNodes) {
 
-// Terminating condition check when
-// the priority queue contains zero elements, return
+
             if (pQue.isEmpty()) {
                 return;
             }
 
-// Deleting the node that has the minimum distance from the priority queue
+            //menghapus node dengan jarak minimum dari pQue
             int ux = pQue.remove().n;
 
-// Adding the node whose distance is
-// confirmed
+            //menambhkan node
             if (settld.contains(ux)) {
                 continue;
             }
 
-// We don't have to call eNeighbors(ux)
-// if ux is already present in the settled set.
+
             settld.add(ux);
 
             eNeighbours(ux);
@@ -73,21 +63,18 @@ public class Stasiun {
         int edgeDist = -1;
         int newDist = -1;
 
-// All of the neighbors of vx
+        //semua tetangga vx
         for (int j = 0; j < adjacent.get(ux).size(); j++) {
             Node vx = adjacent.get(ux).get(j);
 
-// If the current node hasn't been already processed
             if (!settld.contains(vx.n)) {
                 edgeDist = vx.price;
                 newDist = distance[ux] + edgeDist;
 
-                // If the new distance is lesser in the cost
                 if (newDist < distance[vx.n]) {
                     distance[vx.n] = newDist;
                 }
 
-                // Adding the current node to the priority queue pQue
                 pQue.add(new Node(vx.n, distance[vx.n]));
             }
         }
@@ -98,22 +85,15 @@ public class Stasiun {
     }
 }
 
-// The Node class implementing the Comparator interface
-// The object of this class represents a node of the graph
 class Node implements Comparator<Node> {
 
-    // Member variables of the Node class
     public int n;
     public int price;
 
-// Constructors of this class
-
-    // Constructor 1
     public Node() {
 
     }
 
-    // Constructor 2
     public Node(int n, int price) {
         this.n = n;
         this.price = price;
