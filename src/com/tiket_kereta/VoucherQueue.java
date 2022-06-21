@@ -57,4 +57,11 @@ public class VoucherQueue {
         return voucherDiscounts;
     }
 
+    public void setDiscount(String kode, double potongan) {
+        for (Voucher i : vouchers) {
+            if (i.code.equals(kode)) {
+                i.discount = potongan;
+            }
+        }
+    }
 }

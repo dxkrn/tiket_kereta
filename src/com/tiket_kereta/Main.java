@@ -321,14 +321,16 @@ public class Main {
             System.out.println("|  [2] Input Jadwal Kereta  |");
             System.out.println("|  [3] Hapus Jadwal Kereta  |");
             System.out.println("|  [4] Daftar Pesanan       |");
-            System.out.println("|  [5] Input Voucher        |");
-            System.out.println("|  [6] Hapus Voucher        |");
-            System.out.println("|  [7] Cetak Jadwal         |");
-            System.out.println("|  [8] Cetak Daftar Pesanan |");
-            System.out.println("|  [9] Cetak Daftar Voucher |");
+            System.out.println("|  [5] Lihat Voucher        |");
+            System.out.println("|  [6] Input Voucher        |");
+            System.out.println("|  [7] Update Voucher        |");
+            System.out.println("|  [8] Hapus Voucher        |");
+            System.out.println("|  [a] Cetak Jadwal         |");
+            System.out.println("|  [b] Cetak Daftar Pesanan |");
+            System.out.println("|  [c] Cetak Daftar Voucher |");
             System.out.println("|  [e] Keluar               |");
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n");
-            System.out.print("Pilihan [1/2/3/4/5/6/7/8/9/e] : ");
+            System.out.print("Pilihan [1/2/3/4/5/6/7/8/a/b/c/e] : ");
             pilihan = input.next().charAt(0);
             input.nextLine();
 
@@ -348,14 +350,21 @@ public class Main {
                     pesanan.printPesanan();
                     halamanDashboardAdmin(activeUsername);
                 }
-                case '5' -> //memanggil method inputVoucher
+                case '5' ->{
+                    //memanggil method inputVoucher
+                    lihatVoucher();
+                    halamanDashboardAdmin(activeUsername);
+                }
+                case '6' -> //memanggil method inputVoucher
                         halamanInputVoucher();
-                case '6' -> {
+                case '7' -> //memanggil method updateVoucher
+                        halamanUpdateVoucher();
+                case '8' -> {
                     //memanggil method removeVoucher dari objek voucherQueue : FIFO, dengan Queue
                     voucherQueue.removeVoucher();
                     halamanDashboardAdmin(activeUsername);
                 }
-                case '7' -> {
+                case 'a' -> {
                     //memanggil method cetak jadwal : cetak ke file Excel
                     try {
                         cetakJadwal();
@@ -364,7 +373,7 @@ public class Main {
                         e.printStackTrace();
                     }
                 }
-                case '8' -> {
+                case 'b' -> {
                     //memanggil method cetak daftar pesanan : cetak ke file Excel
                     try {
                         cetakDaftarPesanan();
@@ -373,7 +382,7 @@ public class Main {
                         e.printStackTrace();
                     }
                 }
-                case '9' -> {
+                case 'c' -> {
                     //memanggil method cetak voucher : cetak ke file Excel
                     try {
                         cetakVoucher();
@@ -576,7 +585,7 @@ public class Main {
         System.out.println("\n\n\n");
         System.out.println("--* Input Voucher *--");
 
-        //input asal, tujuan, tanggal, waktu, tarif
+        //input kode dan nilai voucher
         System.out.print("Kode Voucher: ");
         kodeVC = input.nextLine();
         System.out.print("Potongan (%) : ");
@@ -600,6 +609,39 @@ public class Main {
                 }
             }
         }
+    }
+
+    //NOTE : updateVoucher
+    public static void halamanUpdateVoucher(){
+        String kodeVC;
+        double potongan;
+
+        lihatVoucher();
+        ArrayList<String> kodeVoucher = new ArrayList<>(voucherQueue.getCode());
+
+        //input kode dan nilai voucher
+        System.out.print("Kode Voucher untuk Update : ");
+        kodeVC = input.nextLine();
+        System.out.print("Potongan (%) : ");
+        potongan = (input.nextDouble() / 100);
+
+        for (String i : kodeVoucher) {
+            if (kodeVC.equals(i)) {
+                System.out.print("\nYakin ingin mengupdate voucher " + kodeVC + "? [y/n] : ");
+                pilihan = input.next().charAt(0);
+                input.nextLine();
+
+                if (pilihan == 'y' || pilihan == 'Y') {
+                    voucherQueue.setDiscount(kodeVC, potongan);
+                    System.out.println("Alert! Update Voucher " + kodeVC + " berhasil!");
+                }
+            } else {
+                System.out.println("Alert! Kode Voucher tidak ditemukan!");
+            }
+        }
+        halamanDashboardAdmin(activeUsername);
+
+
 
     }
 
