@@ -15,3 +15,9 @@ Admin passwd    : *admin123* <br>
 **!You can also register usernames for other users**
 
 Hv a nc dy! Thanks🤗
+
+<br><br>
+***👇 Below are images of Train Station Maps and Graph implementation***
+
+![Train Stations Map](src/com/tiket_kereta/Assets/Images/map_rute_kereta.png)
+![Graph](src/com/tiket_kereta/Assets/Images/graf_rute_kereta.png)

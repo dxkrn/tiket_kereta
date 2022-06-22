@@ -13,7 +13,6 @@ public class Pesanan {
 
     public void tambahPesanan(String id, String username, String name, String telp, String train, String src, String dest, String date, String time, int numSeat, double totalCost) {
         pesanan.put(id, new Pesanan());
-
         pesanan.get(id).username = username;
         pesanan.get(id).name = name;
         pesanan.get(id).telp = telp;
